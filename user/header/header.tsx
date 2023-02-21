@@ -4,6 +4,8 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 
+import { useAppSelector } from '../../hooks';
+
 import { DivHeader, DivLogo, DivNav, LogOut, Search, Span } from './headerStyle';
 
 const Header = () => {
@@ -41,7 +43,7 @@ const Header = () => {
               alt=""
               style={{ width: '50px', height: 'auto' }}
             />
-            <p> {currentUser.username} </p>
+            <p> {currentUser.nickname} </p>
           </Span>
         )}
       </DivNav>
