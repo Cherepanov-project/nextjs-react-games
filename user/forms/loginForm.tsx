@@ -9,7 +9,9 @@ import { useCookies } from 'react-cookie';
 import facebook from '../img/facebook.svg';
 import google from '../img/google.svg';
 import twitter from '../img/twitter.svg';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { loginUser } from '../../store/userSlice';
+import { User } from '../types/gamesItemTypes';
 
 import {
   DivImgLogo,
@@ -32,32 +34,25 @@ export type Inputs = {
 
 const LoginForm = () => {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
+  const { error, loading } = useAppSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
     clearErrors,
   } = useForm<Inputs>();
-  const { users } = useAppSelector((state) => state.user);
-  const [cookies, setCookies] = useCookies(['user']);
-
-  const onSubmit: SubmitHandler<Inputs> = (date) => {
-    const user = {
+  const [cookies, setCookie] = useCookies(['token', 'user']);
+  const onSubmit: SubmitHandler<Inputs> = async (date) => {
+    const user: User = {
+      image: '',
+      nickname: date.username.split('@')[0],
       email: date.username,
-      username: date.username,
       password: date.password,
     };
-    // console.log('user :', user);
-
-    clearErrors();
-    const authUser = users.find(
-      (u: any) =>
-        (u.email === user.email || u.username === user.username) && u.password === user.password,
-    );
-    if (authUser) {
-      setCookies('user', authUser);
-      // console.log('auth');
+    const isOk = await dispatch(loginUser({ user, setCookie }));
+    if (isOk.meta.requestStatus === 'fulfilled') {
+      clearErrors();
       router.push('/profile');
     }
   };
@@ -80,15 +75,19 @@ const LoginForm = () => {
           <Span>or with Email</Span>
         </H4>
         <Input
-          placeholder="User Name  or  email..."
+          placeholder="User email"
           {...register('username', {
             required: 'Required field',
+            pattern: {
+              value: /^\S+@\S+\.\S+$/,
+              message: 'Type valid email',
+            },
           })}
         />
         {errors?.username && <PError>{errors.username.message}</PError>}
-
         <Input
           placeholder="Password"
+          type="password"
           {...register('password', {
             required: 'You must specify a password',
             minLength: {
@@ -103,7 +102,11 @@ const LoginForm = () => {
         />
         {errors.password && <PError>{errors.password.message}</PError>}
 
-        <InputBtn type="submit" children="Register" />
+        {!errors.password && error === 'loginPassword' && (
+          <PError>Пароль или email введены не верно</PError>
+        )}
+
+        <InputBtn type="submit" children="Log in" disabled={loading} />
         <P>
           Don`t have an account?
           <Link href="/registration">

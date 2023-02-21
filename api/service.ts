@@ -1,53 +1,25 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { User } from '../user/types/gamesItemTypes';
 
-const BASE_URL = '';
+export const fetchRegisterUser = async (user: User) => {
+  const res = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(user),
+  });
+  return res;
+};
+export const fetchLoginUser = async (user: { login: string; password: string }) => {
+  const res = await fetch('/api/auth/token', {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(user),
+  });
 
-export const fetchRegisterUser = createAsyncThunk(
-  'user/fetchRegisterUser',
-  async (user, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${BASE_URL}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify(user),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        return rejectWithValue(data.errors);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (e) {
-      return rejectWithValue(e);
-    }
-  },
-);
-
-export const fetchLoginUser = createAsyncThunk(
-  'user/fetchLoginUser',
-  async (user, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${BASE_URL}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify(user),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        return rejectWithValue(data.errors);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (e) {
-      return rejectWithValue(e);
-    }
-  },
-);
+  return res;
+};
