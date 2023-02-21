@@ -1,16 +1,16 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import google from '../img/google.svg';
 import facebook from '../img/facebook.svg';
 import twitter from '../img/twitter.svg';
-import { userSlice } from '../../store/userSlice';
+import { registerUser } from '../../store/userSlice';
 import { User } from '../types/gamesItemTypes';
 
 import {
@@ -40,23 +40,26 @@ const RegistrationForm = () => {
     formState: { errors },
     clearErrors,
   } = useForm<Inputs>();
-  const [cookies, setCookies] = useCookies(['user']);
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const { updateList } = userSlice.actions;
 
-  const onSubmit: SubmitHandler<Inputs> = (date: Inputs) => {
+  const dispatch = useAppDispatch();
+
+  const router = useRouter();
+
+  const { error, loading } = useAppSelector((state) => state.user);
+  const [cookies, setCookie] = useCookies(['token', 'user']);
+  const onSubmit: SubmitHandler<Inputs> = async (date: Inputs) => {
     const user: User = {
       image: '',
-      username: date.username,
+      nickname: date.username,
       email: date.email,
       password: date.password,
     };
-    console.log('user :', user);
-    clearErrors();
-    dispatch(updateList([user]));
-    cookies.user = user;
-    router.push('/profile');
+
+    const isOk = await dispatch(registerUser({ user, setCookie }));
+    if (isOk.meta.requestStatus === 'fulfilled') {
+      clearErrors();
+      router.push('/profile');
+    }
   };
 
   return (
@@ -76,6 +79,12 @@ const RegistrationForm = () => {
         <H4>
           <Span>or with Email</Span>
         </H4>
+        {error === 'loginFalse' && (
+          <PError>
+            Регистрация прошла успешно, но со входом на сайт что-то пошло не так. Попробуйте позже
+            или обратитесь в поддержку
+          </PError>
+        )}
         <Input
           placeholder="Username"
           {...register('username', {
@@ -91,7 +100,6 @@ const RegistrationForm = () => {
           })}
         />
         {errors?.username && <PError>{errors.username.message}</PError>}
-
         <Input
           placeholder="Some@example.com"
           {...register('email', {
@@ -103,7 +111,7 @@ const RegistrationForm = () => {
           })}
         />
         {errors?.email && <PError>{errors.email.message}</PError>}
-
+        {!errors?.email && error === 'email' && <PError>Данный Email уже занят</PError>}
         <Input
           type="password"
           placeholder="Password"
@@ -120,8 +128,10 @@ const RegistrationForm = () => {
           })}
         />
         {errors.password && <PError>{errors.password.message}</PError>}
-
-        <InputBtn type="submit" children="Create" />
+        {error === 'unknown' && (
+          <PError>При регистрации что-то пошло не так попробуйте позже</PError>
+        )}
+        <InputBtn type="submit" children="Create" disabled={loading} />
         <P>
           Already have an account?{' '}
           <Link href="/login">

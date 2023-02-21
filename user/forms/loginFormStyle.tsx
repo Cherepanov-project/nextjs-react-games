@@ -122,5 +122,6 @@ export const P = styled.p`
 `;
 
 export const PError = styled.p`
-  color: red;
+  color: #d90000;
+  margin-bottom: 20px;
 `;
