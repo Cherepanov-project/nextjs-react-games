@@ -3,8 +3,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchLoginUser, fetchRegisterUser } from '../api/service';
 import { User } from '../user/types/gamesItemTypes';
 
-// import {fetchLoginUser, registerUser} from '../../api/service';
-
 export interface ReducerInitialState {
   users: User[];
   user: User;
@@ -87,7 +85,7 @@ export const registerUser = createAsyncThunk(
         return rejectWithValue('email');
       }
       if (!response.ok) {
-        throw Error;
+        return rejectWithValue('unknown');
       }
       const responseLogin = await fetchLoginUser({ login: user.email, password: user.password });
       if (!responseLogin.ok) {
@@ -109,7 +107,7 @@ export const loginUser = createAsyncThunk(
       user,
       setCookie,
     }: {
-      user: User;
+      user: { email: string; password: string };
       setCookie: (name: 'user' | 'token', value: string, options?: any) => void;
     },
     { rejectWithValue },
@@ -124,7 +122,7 @@ export const loginUser = createAsyncThunk(
       }
       const body = await response.json();
       setCookie('token', body.token);
-      setCookie('user', JSON.stringify(user));
+      setCookie('user', user.email);
     } catch (e) {
       return rejectWithValue('unknownLogin');
     }

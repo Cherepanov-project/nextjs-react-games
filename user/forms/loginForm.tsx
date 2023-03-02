@@ -1,5 +1,4 @@
 /* eslint-disable react/no-children-prop */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { SubmitHandler, useForm } from 'react-hook-form';
 import React from 'react';
 import Link from 'next/link';
@@ -11,7 +10,6 @@ import google from '../img/google.svg';
 import twitter from '../img/twitter.svg';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { loginUser } from '../../store/userSlice';
-import { User } from '../types/gamesItemTypes';
 
 import {
   DivImgLogo,
@@ -33,25 +31,28 @@ export type Inputs = {
 };
 
 const LoginForm = () => {
+  const { error, loading } = useAppSelector((state) => state.user);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie] = useCookies(['token', 'user', 'GAME_PLATFORM_REDIRECT_URI']);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector((state) => state.user);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     clearErrors,
   } = useForm<Inputs>();
-  const [cookies, setCookie] = useCookies(['token', 'user']);
+
+  setCookie('GAME_PLATFORM_REDIRECT_URI', 'https://nextjs-react-games.vercel.app/oauth2/redirect');
+
   const onSubmit: SubmitHandler<Inputs> = async (date) => {
-    const user: User = {
-      image: '',
-      nickname: date.username.split('@')[0],
+    const user = {
       email: date.username,
       password: date.password,
     };
-    const isOk = await dispatch(loginUser({ user, setCookie }));
-    if (isOk.meta.requestStatus === 'fulfilled') {
+    const isAuth = await dispatch(loginUser({ user, setCookie }));
+    if (isAuth.meta.requestStatus === 'fulfilled') {
       clearErrors();
       router.push('/profile');
     }
@@ -61,7 +62,7 @@ const LoginForm = () => {
     <Section>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DivImgLogo>
-          <a href="https://www.google.com">
+          <a href="http://localhost:8080/oauth2/authorize/google">
             <ImgLogo src={google.src} alt="google" />
           </a>
           <a href="https://www.facebook.com">

@@ -1,15 +1,12 @@
-/* eslint-disable react/no-children-prop */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 
-import { useAppSelector } from '../../hooks';
-
 import { DivHeader, DivLogo, DivNav, LogOut, Search, Span } from './headerStyle';
 
 const Header = () => {
-  const [cookies, setCookies, removeCookie] = useCookies(['user']);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookies, removeCookie] = useCookies(['user', 'token']);
   const router = useRouter();
   const currentUser = cookies.user;
   return (
@@ -32,9 +29,11 @@ const Header = () => {
           <Span>
             <LogOut
               type="button"
+              // eslint-disable-next-line react/no-children-prop
               children="log out"
               onClick={() => {
                 removeCookie('user');
+                removeCookie('token');
                 router.push('/');
               }}
             />

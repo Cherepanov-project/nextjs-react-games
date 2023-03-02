@@ -1,6 +1,5 @@
 /* eslint-disable react/no-children-prop */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -42,11 +41,12 @@ const RegistrationForm = () => {
   } = useForm<Inputs>();
 
   const dispatch = useAppDispatch();
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie] = useCookies(['token', 'user']);
   const router = useRouter();
 
   const { error, loading } = useAppSelector((state) => state.user);
-  const [cookies, setCookie] = useCookies(['token', 'user']);
+
   const onSubmit: SubmitHandler<Inputs> = async (date: Inputs) => {
     const user: User = {
       image: '',
@@ -55,8 +55,8 @@ const RegistrationForm = () => {
       password: date.password,
     };
 
-    const isOk = await dispatch(registerUser({ user, setCookie }));
-    if (isOk.meta.requestStatus === 'fulfilled') {
+    const isAuth = await dispatch(registerUser({ user, setCookie }));
+    if (isAuth.meta.requestStatus === 'fulfilled') {
       clearErrors();
       router.push('/profile');
     }
