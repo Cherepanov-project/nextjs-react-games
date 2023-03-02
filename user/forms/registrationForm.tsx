@@ -66,7 +66,7 @@ const RegistrationForm = () => {
     <Section>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DivImgLogo>
-          <a href="https://www.google.com">
+          <a href="http://localhost:8088/oauth2/authorize/google">
             <ImgLogo src={google.src} alt="google" />
           </a>
           <a href="https://www.facebook.com">
