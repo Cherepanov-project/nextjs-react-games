@@ -42,7 +42,8 @@ const RegistrationForm = () => {
 
   const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie] = useCookies(['token', 'user']);
+  const [cookies, setCookie] = useCookies(['token', 'user', 'GAME_PLATFORM_REDIRECT_URI']);
+  setCookie('GAME_PLATFORM_REDIRECT_URI', 'https://nextjs-react-games.vercel.app/oauth2/redirect');
   const router = useRouter();
 
   const { error, loading } = useAppSelector((state) => state.user);

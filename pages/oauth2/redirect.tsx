@@ -5,7 +5,6 @@ const OAuth2RedirectHandler = () => {
   const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookies, setCookie] = useCookies(['token', 'user']);
-
   if (router.query?.token) {
     const { email, token } = router.query;
     setCookie('user', email);
