@@ -7,7 +7,7 @@ export const fetchRegisterUser = async (user: User) => {
       accept: 'application/json',
       'Content-Type': 'application/json;charset=utf-8',
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify({ email: user.email, nickname: user.username, password: user.password }),
   });
   return res;
 };

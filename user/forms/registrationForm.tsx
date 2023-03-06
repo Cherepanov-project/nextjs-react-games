@@ -51,7 +51,7 @@ const RegistrationForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (date: Inputs) => {
     const user: User = {
       image: '',
-      nickname: date.username,
+      username: date.username,
       email: date.email,
       password: date.password,
     };
