@@ -13,135 +13,132 @@ import { registerUser } from '../../store/userSlice';
 import { User } from '../types/gamesItemTypes';
 
 import {
-  DivImgLogo,
-  Form,
-  H4,
-  ImgLogo,
-  Input,
-  InputBtn,
-  P,
-  PError,
-  Section,
-  Span,
+ DivImgLogo,
+ Form,
+ H4,
+ ImgLogo,
+ Input,
+ InputBtn,
+ P,
+ PError,
+ Section,
+ Span,
 } from './loginFormStyle';
 
 type Inputs = {
-  username: string;
-  email: string;
-  password: string;
-  password_repeat: string;
+ username: string;
+ email: string;
+ password: string;
+ password_repeat: string;
 };
 
 const RegistrationForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    clearErrors,
-  } = useForm<Inputs>();
+ const {
+  register,
+  handleSubmit,
+  formState: { errors },
+  clearErrors,
+ } = useForm<Inputs>();
 
-  const dispatch = useAppDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie] = useCookies(['token', 'user', 'GAME_PLATFORM_REDIRECT_URI']);
-  setCookie('GAME_PLATFORM_REDIRECT_URI', 'https://nextjs-react-games.vercel.app/oauth2/redirect');
-  const router = useRouter();
+ const dispatch = useAppDispatch();
+ const [, setCookie] = useCookies(['token', 'user', 'GAME_PLATFORM_REDIRECT_URI']);
+ setCookie('GAME_PLATFORM_REDIRECT_URI', 'https://nextjs-react-games.vercel.app/oauth2/redirect');
+ const router = useRouter();
 
-  const { error, loading } = useAppSelector((state) => state.user);
+ const { error, loading } = useAppSelector((state) => state.user);
 
-  const onSubmit: SubmitHandler<Inputs> = async (date: Inputs) => {
-    const user: User = {
-      image: '',
-      username: date.username,
-      email: date.email,
-      password: date.password,
-    };
-
-    const isAuth = await dispatch(registerUser({ user, setCookie }));
-    if (isAuth.meta.requestStatus === 'fulfilled') {
-      clearErrors();
-      router.push('/profile');
-    }
+ const onSubmit: SubmitHandler<Inputs> = async (date: Inputs) => {
+  const user: User = {
+   image: '',
+   username: date.username,
+   email: date.email,
+   password: date.password,
   };
 
-  return (
-    <Section>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <DivImgLogo>
-          <a href="http://91.241.64.78:8088/oauth2/authorize/google">
-            <ImgLogo src={google.src} alt="google" />
-          </a>
-          <a href="https://www.facebook.com">
-            <ImgLogo src={facebook.src} alt="facebook" />
-          </a>
-          <a href="https://www.twitter.com">
-            <ImgLogo src={twitter.src} alt="twitter" />
-          </a>
-        </DivImgLogo>
-        <H4>
-          <Span>or with Email</Span>
-        </H4>
-        {error === 'loginFalse' && (
-          <PError>
-            Регистрация прошла успешно, но со входом на сайт что-то пошло не так. Попробуйте позже
-            или обратитесь в поддержку
-          </PError>
-        )}
-        <Input
-          placeholder="Username"
-          {...register('username', {
-            required: 'Required field',
-            minLength: {
-              value: 3,
-              message: 'At least 3 characters',
-            },
-            maxLength: {
-              value: 20,
-              message: 'Maximum 20 character',
-            },
-          })}
-        />
-        {errors?.username && <PError>{errors.username.message}</PError>}
-        <Input
-          placeholder="Some@example.com"
-          {...register('email', {
-            required: 'Required field',
-            pattern: {
-              value: /^\S+@\S+\.\S+$/,
-              message: 'Type valid email',
-            },
-          })}
-        />
-        {errors?.email && <PError>{errors.email.message}</PError>}
-        {!errors?.email && error === 'email' && <PError>Данный Email уже занят</PError>}
-        <Input
-          type="password"
-          placeholder="Password"
-          {...register('password', {
-            required: 'You must specify a password',
-            minLength: {
-              value: 6,
-              message: 'Password must have at least 6 characters',
-            },
-            maxLength: {
-              value: 40,
-              message: 'Password must have maximum 40 characters',
-            },
-          })}
-        />
-        {errors.password && <PError>{errors.password.message}</PError>}
-        {error === 'unknown' && (
-          <PError>При регистрации что-то пошло не так попробуйте позже</PError>
-        )}
-        <InputBtn type="submit" children="Create" disabled={loading} />
-        <P>
-          Already have an account?{' '}
-          <Link href="/login">
-            <a>Sign In.</a>
-          </Link>
-        </P>
-      </Form>
-    </Section>
-  );
+  const isAuth = await dispatch(registerUser({ user, setCookie }));
+  if (isAuth.meta.requestStatus === 'fulfilled') {
+   clearErrors();
+   router.push('/profile');
+  }
+ };
+
+ return (
+  <Section>
+   <Form onSubmit={handleSubmit(onSubmit)}>
+    <DivImgLogo>
+     <a href="http://91.241.64.78:8088/oauth2/authorize/google">
+      <ImgLogo src={google.src} alt="google" />
+     </a>
+     <a href="https://www.facebook.com">
+      <ImgLogo src={facebook.src} alt="facebook" />
+     </a>
+     <a href="https://www.twitter.com">
+      <ImgLogo src={twitter.src} alt="twitter" />
+     </a>
+    </DivImgLogo>
+    <H4>
+     <Span>or with Email</Span>
+    </H4>
+    {error === 'loginFalse' && (
+     <PError>
+      Регистрация прошла успешно, но со входом на сайт что-то пошло не так. Попробуйте позже или
+      обратитесь в поддержку
+     </PError>
+    )}
+    <Input
+     placeholder="Username"
+     {...register('username', {
+      required: 'Required field',
+      minLength: {
+       value: 3,
+       message: 'At least 3 characters',
+      },
+      maxLength: {
+       value: 20,
+       message: 'Maximum 20 character',
+      },
+     })}
+    />
+    {errors?.username && <PError>{errors.username.message}</PError>}
+    <Input
+     placeholder="Some@example.com"
+     {...register('email', {
+      required: 'Required field',
+      pattern: {
+       value: /^\S+@\S+\.\S+$/,
+       message: 'Type valid email',
+      },
+     })}
+    />
+    {errors?.email && <PError>{errors.email.message}</PError>}
+    {!errors?.email && error === 'email' && <PError>Данный Email уже занят</PError>}
+    <Input
+     type="password"
+     placeholder="Password"
+     {...register('password', {
+      required: 'You must specify a password',
+      minLength: {
+       value: 6,
+       message: 'Password must have at least 6 characters',
+      },
+      maxLength: {
+       value: 40,
+       message: 'Password must have maximum 40 characters',
+      },
+     })}
+    />
+    {errors.password && <PError>{errors.password.message}</PError>}
+    {error === 'unknown' && <PError>При регистрации что-то пошло не так попробуйте позже</PError>}
+    <InputBtn type="submit" children="Create" disabled={loading} />
+    <P>
+     Already have an account?{' '}
+     <Link href="/login">
+      <a>Sign In.</a>
+     </Link>
+    </P>
+   </Form>
+  </Section>
+ );
 };
 
 export default RegistrationForm;
