@@ -1,13 +1,13 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
-import { useRouter } from 'next/router';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { DivHeader, DivLogo, DivNav, LogOut, Search, Span } from './headerStyle';
 
 const Header = () => {
  const [cookies, , removeCookie] = useCookies(['user', 'token']);
- const router = useRouter();
  const currentUser = cookies.user;
+ const { logout } = useAuth0();
  return (
   <DivHeader>
    <DivLogo>
@@ -33,7 +33,7 @@ const Header = () => {
        onClick={() => {
         removeCookie('user');
         removeCookie('token');
-        router.push('/');
+        logout();
        }}
       />
       <img

@@ -4,12 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import google from '../img/google.svg';
 import facebook from '../img/facebook.svg';
 import twitter from '../img/twitter.svg';
-import { registerUser } from '../../store/userSlice';
+import { registerUser, oauthExist } from '../../store/userSlice';
 import { User } from '../types/gamesItemTypes';
 
 import {
@@ -39,10 +40,16 @@ const RegistrationForm = () => {
   formState: { errors },
   clearErrors,
  } = useForm<Inputs>();
+ const [, setCookie] = useCookies(['token', 'user']);
 
+ const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+ if (isAuthenticated) {
+  getAccessTokenSilently().then((token) => {
+   oauthExist(token, setCookie);
+  });
+ }
  const dispatch = useAppDispatch();
- const [, setCookie] = useCookies(['token', 'user', 'GAME_PLATFORM_REDIRECT_URI']);
- setCookie('GAME_PLATFORM_REDIRECT_URI', 'https://nextjs-react-games.vercel.app/oauth2/redirect');
+
  const router = useRouter();
 
  const { error, loading } = useAppSelector((state) => state.user);
@@ -66,7 +73,7 @@ const RegistrationForm = () => {
   <Section>
    <Form onSubmit={handleSubmit(onSubmit)}>
     <DivImgLogo>
-     <a href="http://91.241.64.78:8088/oauth2/authorize/google">
+     <a onClick={() => loginWithRedirect()}>
       <ImgLogo src={google.src} alt="google" />
      </a>
      <a href="https://www.facebook.com">

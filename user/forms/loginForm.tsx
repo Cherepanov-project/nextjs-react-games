@@ -4,12 +4,13 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import facebook from '../img/facebook.svg';
 import google from '../img/google.svg';
 import twitter from '../img/twitter.svg';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { loginUser } from '../../store/userSlice';
+import { loginUser, oauthExist } from '../../store/userSlice';
 
 import {
  DivImgLogo,
@@ -32,9 +33,15 @@ export type Inputs = {
 
 const LoginForm = () => {
  const { error, loading } = useAppSelector((state) => state.user);
- const [, setCookie] = useCookies(['token', 'user', 'GAME_PLATFORM_REDIRECT_URI']);
+ const [, setCookie] = useCookies(['token', 'user']);
  const router = useRouter();
  const dispatch = useAppDispatch();
+ const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+ if (isAuthenticated) {
+  getAccessTokenSilently().then((token) => {
+   oauthExist(token, setCookie);
+  });
+ }
 
  const {
   register,
@@ -42,8 +49,6 @@ const LoginForm = () => {
   formState: { errors },
   clearErrors,
  } = useForm<Inputs>();
-
- setCookie('GAME_PLATFORM_REDIRECT_URI', 'https://nextjs-react-games.vercel.app/oauth2/redirect');
 
  const onSubmit: SubmitHandler<Inputs> = async (date) => {
   const user = {
@@ -61,7 +66,7 @@ const LoginForm = () => {
   <Section>
    <Form onSubmit={handleSubmit(onSubmit)}>
     <DivImgLogo>
-     <a href="http://91.241.64.78:8088/oauth2/authorize/google">
+     <a onClick={() => loginWithRedirect()}>
       <ImgLogo src={google.src} alt="google" />
      </a>
      <a href="https://www.facebook.com">

@@ -21,3 +21,10 @@ export const fetchLoginUser = async (user: { login: string; password: string }) 
  const res = await instance.post('/api/auth/token', { user });
  return res;
 };
+export const axiosOauth = async (token: string) => {
+ const res = await instance.post(
+  'http://91.241.64.78:8088/api/auth/oauth2',
+  JSON.stringify({ token, connection: 'google' }),
+ );
+ return res;
+};

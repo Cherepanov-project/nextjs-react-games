@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchLoginUser, fetchRegisterUser } from '../api/service';
+import { fetchLoginUser, fetchRegisterUser, axiosOauth } from '../api/service';
 import { User } from '../user/types/gamesItemTypes';
 
 export interface ReducerInitialState {
@@ -121,6 +121,19 @@ export const loginUser = createAsyncThunk(
   }
  },
 );
+export const oauthExist = async (
+ token: string,
+ setCookie: (name: 'user' | 'token', value: string, options?: any) => void,
+) => {
+ try {
+  const { data } = await axiosOauth(token);
+  setCookie('token', data.token);
+  setCookie('user', data.login);
+  console.log(data);
+ } catch (err) {
+  console.log(err);
+ }
+};
 export const userSlice = createSlice({
  name: 'users',
  initialState,
