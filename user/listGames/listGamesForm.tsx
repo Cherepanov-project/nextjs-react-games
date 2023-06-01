@@ -17,6 +17,7 @@ import fruitNinjaIcon from '../img/fruitNinjaIcon.png';
 import sapperIcon from '../img/sapperIcon.png';
 import tanksIcon from '../img/tanksIcon.png';
 import doodler from '../img/doodler-guy.png';
+import wallkickerIcon from '../img/wallkickersIcon.png';
 
 import { GameLink } from './GameLink';
 import { Games, Page, HeaderGames, ListGames } from './listGamesStyle';
@@ -36,6 +37,7 @@ const ListGamesForm = () => {
     { src: sapperIcon.src, title: 'sapper' },
     { src: tanksIcon.src, title: 'tanks' },
     { src: doodler.src, title: 'doodle-jump' },
+    { src: wallkickerIcon.src, title: 'wallkickers' },
   ];
   return (
     <>

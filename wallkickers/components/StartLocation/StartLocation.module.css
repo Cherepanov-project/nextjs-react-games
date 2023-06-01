@@ -1,0 +1,12 @@
+.startLocation {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 892px;
+  background-image: url("../../assets/backgrounds/startGround.png");
+  background-size: 100% 305px;
+  background-repeat: no-repeat;
+  background-position: 100% 587px;
+}
+
+/*# sourceMappingURL=StartLocation.module.css.map */

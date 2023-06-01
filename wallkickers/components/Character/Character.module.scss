@@ -1,0 +1,89 @@
+.characterWallHoldLeft{
+  display: flex;
+  align-items: flex-start;
+  background-image: url("../../assets/character/characterWallLandSprite.png");
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  position: absolute;
+  width: 15px;
+  height: 44px;
+  transform: scale(-1, 1)
+}
+
+.characterWallHoldRight{
+  background-image: url("../../assets/character/characterWallLandSprite.png");
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  position: absolute;
+  width: 15px;
+  height: 44px;
+}
+
+.characterAirSpinRight{
+  width: 48px;
+  height: 48px;
+  background-image: url("../../assets/character/characterAirSpinSprite.png");
+  position: absolute;
+  left: 280px;
+  animation: airSpin 0.35s steps(6) infinite;
+}
+
+.characterAirSpinLeft{
+  transform: scale(-1, 1);
+  width: 48px;
+  height: 48px;
+  background-image: url("../../assets/character/characterAirSpinSprite.png");
+  position: absolute;
+  animation: airSpin 0.35s steps(6) infinite;
+}
+
+@keyframes airSpin{
+  100%{
+    background-position: -288px;
+  }
+}
+
+
+.characterRunRightSide{
+  background-image: url("../../assets/character/characterRunSprite.png");
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  animation: characterRun 0.4s steps(8) infinite;
+}
+
+.characterRunLeftSide{
+  transform: scale(-1, 1);
+  background-image: url("../../assets/character/characterRunSprite.png");
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  animation: characterRun 0.4s steps(8) infinite;
+}
+
+@keyframes characterRun{
+  100%{
+    background-position: -384px;
+  }
+}
+
+.characterJumpRight{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/character/characterJumpSprite.png");
+  animation: characterJump 0.2s steps(3) 2;
+}
+.characterJumpLeft{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/character/characterJumpSprite.png");
+  transform: scale(-1,1);
+  animation: characterJump 0.2s steps(3) 2;
+}
+@keyframes characterJump{
+  100%{
+    background-position: -144px;
+  }
+}

@@ -1,0 +1,13 @@
+.woodCircleWall{
+  position: absolute;
+  background-size: 120%;
+  background-image: url("../../assets/walls/woodCircledWall.png");
+  border-radius: 5px;
+}
+
+.grassWall{
+  position: absolute;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-image: url("../../assets/walls/grassBlock.png");
+}
