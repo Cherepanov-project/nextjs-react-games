@@ -13,6 +13,7 @@ import doodlerReducer from '../doodle-jump/reducer/doodleReducer';
 import spaceshipSlice from '../two-min-in-space/store/spaceshipSlice';
 import tamagotchiSlice from '../tamagotchi/slices/slices';
 import { calendarReducers } from '../calendar/store/slices';
+import menuSlice from '../pacman/src/Store/menuSlice';
 
 import user from './userSlice';
 
@@ -31,6 +32,7 @@ export const store = configureStore({
     spaceship: spaceshipSlice,
     tamagotchi: tamagotchiSlice,
     calendar: calendarReducers,
+    menuSlice,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({

@@ -1,0 +1,48 @@
+.game {
+  animation: appearing 0.3s ease-out;
+  text-align: center;
+  text-align: -webkit-center;
+  height: 100vh;
+  background-color: black;
+}
+
+.back {
+  position: absolute;
+  left: 150px;
+  font-size: 32px;
+  margin-top: 40px;
+  margin-right: 100px;
+  display: inline-block;
+  margin-left: 20px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  justify-content: space-between;
+  background-color: yellow;
+  font-family: 'Emulogic';
+  box-shadow: 5px 5px 0px 0px rgba(255, 219, 139, 0.3);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    box-shadow: none;
+    translate: 5px 5px;
+  }
+}
+#canvas {
+  transform: scale(1.75);
+  margin-top: 210px;
+  border: 5px solid #342dca;
+}
+
+@keyframes appearing {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

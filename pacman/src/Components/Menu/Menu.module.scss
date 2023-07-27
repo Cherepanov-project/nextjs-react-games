@@ -1,0 +1,75 @@
+@font-face {
+  font-family: Emulogic;
+  src: url('../../font/emulogic.ttf');
+}
+
+.menu {
+  height: 100vh;
+  text-align: center;
+  animation: appearing 0.3s ease-out;
+  font-family: 'Emulogic';
+  background-image: url('../../assets/1141532.jpg');
+  background-size: cover;
+  background-position: 0 250px;
+}
+
+.title {
+  margin-top: 40px;
+  color: yellow;
+  font-size: 128px;
+}
+
+.buttons {
+  width: 660px;
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.play_container {
+  margin-bottom: 80px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.play,
+.settings,
+.maps {
+  display: inline-block;
+  width: 250px;
+  height: 100px;
+  border: none;
+  justify-content: space-between;
+  background-color: yellow;
+  font-family: 'Emulogic';
+  font-size: 24px;
+  box-shadow: 11px 11px 0px 0px rgba(255, 219, 139, 0.3);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    box-shadow: 11px 11px 0px 0px rgba(255, 219, 139, 0);
+    translate: 10px 10px;
+  }
+}
+
+.pacman_image {
+  width: 120px;
+  height: 114px;
+  margin-left: 16px;
+}
+
+@keyframes appearing {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
