@@ -7,9 +7,11 @@ export default class Jump extends Trait {
 
   private readonly velocity: number;
 
+  ready: boolean;
+
   constructor() {
     super('jump');
-
+    this.ready = false;
     this.duration = 0.5;
     this.engageTime = 0;
 
@@ -17,7 +19,9 @@ export default class Jump extends Trait {
   }
 
   start() {
-    this.engageTime = this.duration;
+    if (this.ready) {
+      this.engageTime = this.duration;
+    }
   }
 
   cancel() {
@@ -31,5 +35,14 @@ export default class Jump extends Trait {
       entity.vel.y = -this.velocity;
       this.engageTime -= deltaTime;
     }
+
+    this.ready = false;
+  }
+
+  obstruct(entity: object, side: any) {
+    if (side === 'bottom') {
+      this.ready = true;
+    }
+    console.log('entitiy side', side);
   }
 }

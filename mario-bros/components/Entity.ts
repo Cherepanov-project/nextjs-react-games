@@ -7,6 +7,9 @@ export class Trait {
     this.NAME = name;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+  obstruct(entity: object, side: any) {}
+
   update() {
     console.warn('Unhandled update call in Trait');
   }
@@ -37,6 +40,12 @@ export default class Entity {
     // @ts-ignore
     // idk how to fix it (ts)
     this[trait.NAME] = trait;
+  }
+
+  obstruct(side: any) {
+    this.traits.forEach((trait: any) => {
+      trait.obstruct(this, side);
+    });
   }
 
   update(deltaTime: number) {
