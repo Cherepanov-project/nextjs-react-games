@@ -47,7 +47,19 @@ export function loadLevel() {
   return Promise.all([firstLvl, loadBackgroundSprites()]).then(([levelSpec, backgroundSprites]) => {
     const level = new Level();
 
-    createTiles(level, levelSpec.backgrounds);
+    const levelSpecObj = JSON.parse(JSON.stringify(levelSpec));
+
+    for (let i = 0; i < 100; i++) {
+      levelSpecObj.backgrounds[1].ranges.push([
+        Math.floor(Math.random() * 450), // x
+        Math.floor(Math.random() * 20), // width
+        Math.floor(Math.random() * 20), // y
+        // eslint-disable-next-line prettier/prettier
+        Math.floor(Math.random() * 3) // height
+      ]);
+    }
+
+    createTiles(level, levelSpecObj.backgrounds);
 
     const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
     level.comp.layers.push(backgroundLayer);
