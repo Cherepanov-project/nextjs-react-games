@@ -3,6 +3,11 @@ import KeyboardState from './KeyboardState';
 export function setupKeyboard(entity: any) {
   const input = new KeyboardState();
 
+  input.addMapping('ArrowUp', (keyState: any) => {
+    if (keyState) entity.jump.start();
+    else entity.jump.cancel();
+  });
+
   input.addMapping('Space', (keyState: any) => {
     if (keyState) entity.jump.start();
     else entity.jump.cancel();

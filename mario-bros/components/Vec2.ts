@@ -1,17 +1,13 @@
-export class Matrix {
-  private readonly grid: any[];
-
-  constructor() {
-    this.grid = [];
-  }
+export const matrix: any = {
+  grid: [],
 
   forEach(callback: any) {
-    this.grid.forEach((column, x) => {
+    this.grid.forEach((column: number[], x: any) => {
       column.forEach((value: number, y: number) => {
         callback(value, x, y);
       });
     });
-  }
+  },
 
   get(x: number, y: number) {
     const col = this.grid[x];
@@ -19,7 +15,7 @@ export class Matrix {
       return col[y];
     }
     return undefined;
-  }
+  },
 
   set(x: number, y: number, value: number) {
     if (!this.grid[x]) {
@@ -27,8 +23,8 @@ export class Matrix {
     }
 
     this.grid[x][y] = value;
-  }
-}
+  },
+};
 export default class Vec2 {
   x: number;
 

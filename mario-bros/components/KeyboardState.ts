@@ -7,16 +7,19 @@ export default class KeyboardState {
   public keyMap: Map<any, any>;
 
   constructor() {
-    this.keyStates = new Map();
-    this.keyMap = new Map();
+    this.keyStates = new Map(); // кнопка вкл выкл
+    this.keyMap = new Map(); // таблица кодов кнопки и состояния для кнопки
   }
 
   addMapping(code: any, callback: any) {
-    this.keyMap.set(code, callback);
+    this.keyMap.set(code, callback); // добавляем в таблицу код кнопки, коллбэк для кнопки
   }
 
+  // функция вызывает коллбэк для назначенной кнопки и обновляет для нее состояние
   handleEvent(event: any) {
     const { code } = event;
+
+    console.log('CODE OF EVENT', code);
 
     if (!this.keyMap.has(code)) {
       return false;
@@ -31,7 +34,7 @@ export default class KeyboardState {
     }
 
     this.keyStates.set(code, keyState);
-    this.keyMap.get(code)(keyState);
+    this.keyMap.get(code)(keyState); // вызываем коллбэк для определенной кнопки
   }
 
   listenTo(window: any) {
