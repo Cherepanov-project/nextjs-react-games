@@ -1,4 +1,4 @@
-import { matrix } from './Vec2';
+import { Matrix } from './Vec2';
 import Compositor from './Compositor';
 import TileCollider from './TileCollider';
 
@@ -9,7 +9,7 @@ export default class Level {
 
   public entities: Set<any>;
 
-  private readonly tiles: any;
+  private readonly tiles: Matrix;
 
   private readonly tileCollider: TileCollider;
 
@@ -20,7 +20,7 @@ export default class Level {
     this.totalTime = 0;
     this.comp = new Compositor();
     this.entities = new Set();
-    this.tiles = matrix;
+    this.tiles = new Matrix();
     this.tileCollider = new TileCollider(this.tiles);
   }
 

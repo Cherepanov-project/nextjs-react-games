@@ -1,13 +1,13 @@
 import TileResolver from './TileResolver';
+import { Matrix } from './Vec2';
 
 export default class TileCollider {
   private tiles: TileResolver;
 
-  constructor(tileMatrix: any) {
+  constructor(tileMatrix: Matrix) {
     this.tiles = new TileResolver(tileMatrix);
   }
 
-  // это видимо проверка столкновения по горизонтали добавлю сюда возврат true, false
   checkX(entity: any) {
     let x;
 
@@ -20,8 +20,6 @@ export default class TileCollider {
     }
 
     const matches = this.tiles.searchByRange(x, x, entity.pos.y, entity.pos.y + entity.size.y);
-
-    console.log(matches, 'matches matches matches');
 
     matches.forEach((match: any) => {
       if (!match) return;
@@ -42,7 +40,6 @@ export default class TileCollider {
     });
   }
 
-  // это проверка столкновения по вертикали
   checkY(entity: any) {
     let y;
     if (entity.vel.y > 0) {

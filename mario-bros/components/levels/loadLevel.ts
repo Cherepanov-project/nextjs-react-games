@@ -47,29 +47,13 @@ export function loadLevel() {
   return Promise.all([firstLvl, loadBackgroundSprites()]).then(([levelSpec, backgroundSprites]) => {
     const level = new Level();
 
-    const levelSpecObj = JSON.parse(JSON.stringify(levelSpec));
-
-    for (let i = 0; i < 100; i++) {
-      levelSpecObj.backgrounds[1].ranges.push([
-        Math.floor(Math.random() * 450), // x
-        Math.floor(Math.random() * 20), // width
-        Math.floor(Math.random() * 20), // y
-        // eslint-disable-next-line prettier/prettier
-        Math.floor(Math.random() * 3) // height
-      ]);
-    }
-
-    console.log(levelSpecObj.backgrounds, 'levelSpecObj.backgrounds');
-
-    createTiles(level, levelSpecObj.backgrounds);
+    createTiles(level, levelSpec.backgrounds);
 
     const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
     level.comp.layers.push(backgroundLayer);
 
     const spriteLayer = createSpriteLayer(level.entities);
     level.comp.layers.push(spriteLayer);
-
-    console.log(level);
 
     return level;
   });
