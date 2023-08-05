@@ -16,7 +16,8 @@ const Game = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    Promise.all([createMario(), loadGoomba(), loadLevel()]).then(([mario, createGoomba, loadLevel]) => {
+    Promise.all([createMario(), loadGoomba(), loadLevel()]).then(
+      ([mario, createGoomba, loadLevel]) => {
         const camera = new Camera();
         mario.pos.set(80, 186);
 
@@ -48,7 +49,9 @@ const Game = () => {
         };
 
         timer.start();
-      });
+        // eslint-disable-next-line prettier/prettier
+      }
+    );
   }, []);
 
   return <canvas ref={canvasRef} className={styles.canvas} width="600" height="400" />;
