@@ -51,11 +51,27 @@ export function loadLevel() {
 
     for (let i = 0; i < 100; i++) {
       levelSpecObj.backgrounds[1].ranges.push([
-        Math.floor(Math.random() * 450), // x
-        Math.floor(Math.random() * 20), // width
-        Math.floor(Math.random() * 20), // y
+        20 + i * 10, // x
+        5, // width
+        19, // y
         // eslint-disable-next-line prettier/prettier
-        Math.floor(Math.random() * 3) // height
+        1// height
+      ]);
+
+      levelSpecObj.backgrounds[1].ranges.push([
+        20 + i * 15, // x
+        6, // width
+        15, // y
+        // eslint-disable-next-line prettier/prettier
+        1// height
+      ]);
+
+      levelSpecObj.backgrounds[1].ranges.push([
+        25 + i * 12, // x
+        5, // width
+        Math.floor(Math.random() * 10) + 2, // y
+        // eslint-disable-next-line prettier/prettier
+        1// height
       ]);
     }
 
