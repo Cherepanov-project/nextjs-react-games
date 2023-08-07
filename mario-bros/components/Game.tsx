@@ -2,11 +2,10 @@ import { useEffect, useRef } from 'react';
 
 import Timer from './Timer';
 import Camera from './Camera';
-import { createMario } from './MarioEntity';
+import { loadEntities } from './Entityes';
 import { loadLevel } from './levels/loadLevel';
 import { createCameraLayer, createCollisionLayer } from './Layers';
 import { setupKeyboard } from './setupKeyboard';
-import { loadGoomba } from './GoombaEntity';
 import styles from './game.module.scss';
 
 const Game = () => {
@@ -16,40 +15,44 @@ const Game = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    Promise.all([createMario(), loadGoomba(), loadLevel()]).then(
-      ([mario, createGoomba, loadLevel]) => {
-        const camera = new Camera();
-        mario.pos.set(80, 186);
+    Promise.all([loadEntities(), loadLevel()]).then(([entities, loadLevel]) => {
+      const camera = new Camera();
+      console.log(entities, 'ent');
+      const mario = entities.mario();
 
-        const goomba = createGoomba();
+      mario.pos.set(80, 186);
 
-        goomba.pos.set(260, 186);
+      const goomba = entities.goomba();
+      const koopa = entities.koopa();
 
-        // uncomment this for debugging
-        // loadLevel.comp.layers.push(createCollisionLayer(loadLevel), createCameraLayer(camera));
-        createCollisionLayer(loadLevel);
-        createCameraLayer(camera);
+      goomba.pos.set(390, 266);
+      koopa.pos.set(420, 266);
 
-        loadLevel.entities.add(mario);
-        loadLevel.entities.add(goomba);
+      // uncomment this for debugging
+      // loadLevel.comp.layers.push(createCollisionLayer(loadLevel), createCameraLayer(camera));
+      createCollisionLayer(loadLevel);
+      createCameraLayer(camera);
 
-        const input = setupKeyboard(mario);
-        input.listenTo(window);
+      loadLevel.entities.add(mario);
+      loadLevel.entities.add(goomba);
+      loadLevel.entities.add(koopa);
+      const input = setupKeyboard(mario);
+      input.listenTo(window);
 
-        const timer = new Timer(1 / 30);
+      const timer = new Timer(1 / 30);
 
-        timer.update = function update(deltaTime: number) {
-          loadLevel.update(deltaTime);
+      timer.update = function update(deltaTime: number) {
+        loadLevel.update(deltaTime);
 
-          if (mario.pos.x > 200) {
-            camera.pos.x = mario.pos.x - 200;
-          }
+        if (mario.pos.x > 200) {
+          camera.pos.x = mario.pos.x - 200;
+        }
 
-          loadLevel.comp.draw(ctx, camera);
-        };
+        loadLevel.comp.draw(ctx, camera);
+      };
 
-        timer.start();
-        // eslint-disable-next-line prettier/prettier
+      timer.start();
+      // eslint-disable-next-line prettier/prettier
       }
     );
   }, []);

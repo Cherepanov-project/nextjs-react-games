@@ -1,7 +1,9 @@
+/* eslint-disable import/no-duplicates */
 import loadImage from '../levels/loadLevel';
 import tilesImage from '../../assets/imgSprites/tiles.png';
 import marioImage from '../../assets/imgSprites/mario_and_items.png';
 import goombaImage from '../../assets/imgSprites/enemies.png';
+import koopaImage from '../../assets/imgSprites/enemies.png';
 
 import SpriteSheets from './SpriteSheets';
 
@@ -19,10 +21,17 @@ export const loadMarioSprites = () =>
     sprites.define('idle', 2, 73, 16, 18);
     return sprites;
   });
-
+// почему-то врагам отрезает ноги
 export const loadGoombaSprites = () =>
   loadImage(goombaImage).then((image) => {
     const sprites = new SpriteSheets(image, 19, 18);
-    sprites.define('walk-1', 0, 50, 19, 18);
+    sprites.define('walk-1', 0, 15, 19, 24);
+    return sprites;
+  });
+
+export const loadKoopaSprites = () =>
+  loadImage(koopaImage).then((image) => {
+    const sprites = new SpriteSheets(image, 19, 18);
+    sprites.define('walk-1', 54, 12, 18, 50);
     return sprites;
   });

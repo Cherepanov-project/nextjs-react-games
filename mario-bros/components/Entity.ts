@@ -1,10 +1,22 @@
 import Vec2 from './Vec2';
+import BoundingBox from './BoundingBox';
+
+export const Sides = {
+  TOP: Symbol('top'),
+  BOTTOM: Symbol('bottom'),
+  LEFT: Symbol('left'),
+  RIGHT: Symbol('right'),
+};
 
 export class Trait {
   private NAME: string;
 
   constructor(name: string) {
     this.NAME = name;
+  }
+
+  getName() {
+    return this.NAME;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
@@ -20,17 +32,22 @@ export default class Entity {
 
   size: Vec2;
 
-  private vel: Vec2;
+  vel: Vec2;
 
   private traits: number[];
 
   draw: (ctx: any) => void;
 
+  offset: Vec2;
+
+  bounds: BoundingBox;
+
   constructor() {
     this.pos = new Vec2(0, 0);
     this.vel = new Vec2(0, 0);
     this.size = new Vec2(0, 0);
-
+    this.offset = new Vec2(0, 0);
+    this.bounds = new BoundingBox(this.pos, this.size, this.offset);
     this.traits = [];
   }
 
