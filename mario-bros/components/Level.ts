@@ -1,6 +1,7 @@
 import { Matrix } from './Vec2';
 import Compositor from './Compositor';
 import TileCollider from './TileCollider';
+import EntityCollider from './EntityCollider';
 
 export default class Level {
   private readonly gravity: number;
@@ -15,11 +16,14 @@ export default class Level {
 
   private totalTime: number;
 
+  entityCollider: EntityCollider;
+
   constructor() {
     this.gravity = 2000;
     this.totalTime = 0;
     this.comp = new Compositor();
     this.entities = new Set();
+    this.entityCollider = new EntityCollider(this.entities);
     this.tiles = new Matrix();
     this.tileCollider = new TileCollider(this.tiles);
   }
@@ -33,6 +37,8 @@ export default class Level {
 
       entity.pos.y += entity.vel.y * deltaTime;
       this.tileCollider.checkY(entity);
+
+      this.entityCollider.check(entity);
 
       entity.vel.y += this.gravity * deltaTime;
     });

@@ -20,11 +20,13 @@ export class Trait {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+  collides(us: any, them: any) {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   obstruct(entity: object, side: any) {}
 
-  update() {
-    console.warn('Unhandled update call in Trait');
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  update() {}
 }
 
 export default class Entity {
@@ -57,6 +59,12 @@ export default class Entity {
     // @ts-ignore
     // idk how to fix it (ts)
     this[trait.NAME] = trait;
+  }
+
+  collides(candidate: any) {
+    this.traits.forEach((trait: any) => {
+      trait.collides(this, candidate);
+    });
   }
 
   obstruct(side: any) {

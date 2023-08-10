@@ -1,16 +1,56 @@
-import Entity from './Entity';
+import Entity, { Trait } from './Entity';
 import { loadGoombaSprites } from './spriteSheets/LoadSprites';
 import PendulumWalk from './traits/PendulumWalk';
+import Killable from './traits/Killable';
+
+class Behavior extends Trait {
+  constructor() {
+    super('behavior');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  collides(us: any, them: any) {
+    if (them.stomper) {
+      us.killable.kill();
+      us.pendulumWalk.speed = 0;
+    }
+    /* if (us.killable.dead) {
+      return;
+    }
+
+    if (them.stomper) {
+      if (them.vel.y > us.vel.y) {
+        us.killable.kill();
+        us.pendulumMove.speed = 0;
+      } else {
+        them.killable.kill();
+      }
+    } */
+  }
+}
 
 function createGoombaFactory(sprite: any) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  // const it: any = this;
+
+  function routeImage(this: any) {
+    if (this?.killable.dead) {
+      return 'flat';
+    }
+
+    return 'walk-1';
+  }
+
   function drawGoomba(context: any) {
-    sprite.draw('walk-1', context, 0, 0);
+    sprite.draw(routeImage(), context, 0, 0);
   }
 
   return function createGoomba() {
     const goomba = new Entity();
     goomba.size.set(18, 19);
     goomba.addTrait(new PendulumWalk());
+    goomba.addTrait(new Behavior());
+    goomba.addTrait(new Killable());
     goomba.draw = drawGoomba;
 
     return goomba;

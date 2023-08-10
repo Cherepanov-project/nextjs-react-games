@@ -6,7 +6,7 @@
   "tiles": [
     {
       "name": "ground",
-      "index": [0, 2]
+      "index": [0, 1]
     },
     {
       "name": "sky",

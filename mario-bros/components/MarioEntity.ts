@@ -2,6 +2,7 @@ import { loadMarioSprites } from './spriteSheets/LoadSprites';
 import Entity from './Entity';
 import Jump from './traits/Jump';
 import Go from './traits/Go';
+import Stomper from './traits/Stomper';
 
 function createMarioFactory(sprite: any) {
   function drawMario(ctx: any) {
@@ -14,6 +15,7 @@ function createMarioFactory(sprite: any) {
     //  mario.offset.set(10, 20);
     mario.addTrait(new Go());
     mario.addTrait(new Jump());
+    mario.addTrait(new Stomper());
     mario.draw = drawMario;
 
     return mario;
