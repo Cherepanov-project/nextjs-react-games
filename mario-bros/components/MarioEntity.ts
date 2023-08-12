@@ -3,6 +3,7 @@ import Entity from './Entity';
 import Jump from './traits/Jump';
 import Go from './traits/Go';
 import Stomper from './traits/Stomper';
+import Killable from './traits/Killable';
 
 function createMarioFactory(sprite: any) {
   function drawMario(ctx: any) {
@@ -16,6 +17,8 @@ function createMarioFactory(sprite: any) {
     mario.addTrait(new Go());
     mario.addTrait(new Jump());
     mario.addTrait(new Stomper());
+    mario.addTrait(new Killable());
+    mario.killable.removeAfter = 0;
     mario.draw = drawMario;
 
     return mario;

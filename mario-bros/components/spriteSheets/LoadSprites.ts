@@ -24,9 +24,9 @@ export const loadMarioSprites = () =>
 // почему-то врагам отрезает ноги
 export const loadGoombaSprites = () =>
   loadImage(goombaImage).then((image) => {
-    const sprites = new SpriteSheets(image, 100, 100); // 18 19
+    const sprites = new SpriteSheets(image, 18, 19); // 18 19
     sprites.define('walk-1', 0, 15, 19, 24);
-    sprites.define('flat', 38, 50, 19, 18);
+    sprites.define('flat', 36, 15, 18, 18);
     return sprites;
   });
 

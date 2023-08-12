@@ -44,6 +44,8 @@ export default class Entity {
 
   bounds: BoundingBox;
 
+  killable: any;
+
   constructor() {
     this.pos = new Vec2(0, 0);
     this.vel = new Vec2(0, 0);
@@ -73,9 +75,9 @@ export default class Entity {
     });
   }
 
-  update(deltaTime: number) {
+  update(deltaTime: number, level: any) {
     this.traits.forEach((trait: any) => {
-      trait.update(this, deltaTime);
+      trait.update(this, deltaTime, level);
     });
   }
 }

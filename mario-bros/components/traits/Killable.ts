@@ -23,12 +23,14 @@ export default class Killable extends Trait {
     this.deadTime = 0;
   }
 
-  /* update(entity: any, deltaTime: any, level: any) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  update(entity: any, deltaTime: any, level: any) {
     if (this.dead) {
       this.deadTime += deltaTime;
       if (this.deadTime > this.removeAfter) {
         level.entities.delete(entity);
       }
     }
-  } */
+  }
 }
