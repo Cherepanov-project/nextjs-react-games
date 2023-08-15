@@ -43,6 +43,5 @@ export default class Jump extends Trait {
     if (side === 'bottom') {
       this.ready = true;
     }
-    console.log('entitiy side', side);
   }
 }

@@ -1,4 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+
+import { store, decTime } from '../redux/store';
 
 import Timer from './Timer';
 import Camera from './Camera';
@@ -10,6 +13,15 @@ import styles from './game.module.scss';
 
 const Game = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [seconds, setSeconds] = useState(30);
+  let interval: any;
+  useEffect(() => {
+    interval = setInterval(() => {
+      store.dispatch(decTime());
+      setSeconds((seconds) => seconds - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -17,7 +29,7 @@ const Game = () => {
 
     Promise.all([loadEntities(), loadLevel()]).then(([entities, loadLevel]) => {
       const camera = new Camera();
-      console.log(entities, 'ent');
+
       const mario = entities.mario();
 
       mario.pos.set(80, 186);
@@ -57,7 +69,15 @@ const Game = () => {
     );
   }, []);
 
-  return <canvas ref={canvasRef} className={styles.canvas} width="600" height="400" />;
+  return (
+    <div>
+      <canvas ref={canvasRef} className={styles.canvas} width="600" height="400" />
+      {createPortal(
+        <div className={styles.timer}>TIME {seconds > 0 ? seconds : 0}</div>,
+        document.body,
+      )}
+    </div>
+  );
 };
 
 export { Game };

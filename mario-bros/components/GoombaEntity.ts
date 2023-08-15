@@ -43,7 +43,6 @@ function createGoombaFactory(sprite: any) {
 
   function routeImage(goomba: any) {
     if (goomba.killable.dead) {
-      console.log('GOOMBA IS DEAD');
       return 'flat';
     }
 

@@ -1,4 +1,5 @@
 import { Trait } from '../Entity';
+import { store } from '../../redux/store';
 
 export default class Killable extends Trait {
   dead: boolean;
@@ -26,6 +27,9 @@ export default class Killable extends Trait {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   update(entity: any, deltaTime: any, level: any) {
+    if (entity.name === 'mario' && store.getState() === 0) {
+      level.entities.delete(entity);
+    }
     if (this.dead) {
       this.deadTime += deltaTime;
       if (this.deadTime > this.removeAfter) {

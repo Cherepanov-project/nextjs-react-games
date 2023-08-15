@@ -46,7 +46,10 @@ export default class Entity {
 
   killable: any;
 
-  constructor() {
+  name: string;
+
+  constructor(name: string = undefined) {
+    this.name = name;
     this.pos = new Vec2(0, 0);
     this.vel = new Vec2(0, 0);
     this.size = new Vec2(0, 0);
