@@ -30,7 +30,7 @@ const Game = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    Promise.all([loadEntities(), loadLevel('1-1')]).then(([entities, loadLevel]) => {
+    Promise.all([loadEntities(), loadLevel('1-1.json')]).then(([entities, loadLevel]) => {
       const camera = new Camera();
 
       const mario = entities.mario();

@@ -1,5 +1,5 @@
 {
-   "imageURL": "/img/tiles.png",
+   "imageURL": "/api/mario-bros/staticPictures?file=tiles.png",
    "tileW": 16,
    "tileH": 16,
 

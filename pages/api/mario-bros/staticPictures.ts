@@ -7,9 +7,9 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const searchParams = req.query;
   console.log('IN GET MARIO searchParams.file', searchParams.file);
   // Find the absolute path of the json directory
-  const jsonDirectory = path.join(process.cwd(), 'pages/api/mario-bros/json');
+  const jsonDirectory = path.join(process.cwd(), 'pages/api/mario-bros/img');
   // Read the json data file data.json
-  const fileContents = await fs.readFile(`${jsonDirectory}/${searchParams.file}`, 'utf8');
+  const fileContents = await fs.readFile(`${jsonDirectory}/${searchParams.file}`, 'utf-8');
   // Return the content of the data file in json format
   res.status(200).json(fileContents);
 }
