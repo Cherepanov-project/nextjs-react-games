@@ -5,7 +5,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const searchParams = req.query;
-  console.log('IN GET MARIO searchParams.file', searchParams.file);
   // Find the absolute path of the json directory
   const jsonDirectory = path.join(process.cwd(), 'pages/api/mario-bros/img');
   // Read the json data file data.json

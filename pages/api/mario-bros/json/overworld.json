@@ -36,7 +36,24 @@
        {
            "name": "chance-3",
            "index": [26, 0]
+       },
+       {
+          "name": "pipe-1",
+          "index": [0, 8]
+       },
+       {
+        "name":"pipe-2",
+        "index": [1,8]
+       },
+       {
+        "name":"pipe-3",
+        "index": [0.2,9]
+       },
+       {
+        "name":"pipe-4",
+        "index": [0.8,9]
        }
+       
    ],
 
    "animations": [

@@ -47,6 +47,7 @@ export function createTiles(level: any, backgrounds: any) {
       for (let y = yStart; y < yEnd; ++y) {
         level.tiles.set(x, y, {
           name: background.tile,
+          type: background.type,
         });
       }
     }
