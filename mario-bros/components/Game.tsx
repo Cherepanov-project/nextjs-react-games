@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -6,10 +8,11 @@ import { store, decTime } from '../redux/store';
 import Timer from './Timer';
 import Camera from './Camera';
 import { loadEntities } from './Entityes';
-import { loadLevel } from './levels/loadLevel';
+// import { loadLevel } from './levels/loadLevel';
 import { createCameraLayer, createCollisionLayer } from './Layers';
 import { setupKeyboard } from './setupKeyboard';
 import styles from './game.module.scss';
+import { loadLevel } from './levels/loadLevel';
 
 const Game = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -27,7 +30,7 @@ const Game = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    Promise.all([loadEntities(), loadLevel()]).then(([entities, loadLevel]) => {
+    Promise.all([loadEntities(), loadLevel('1-1')]).then(([entities, loadLevel]) => {
       const camera = new Camera();
 
       const mario = entities.mario();

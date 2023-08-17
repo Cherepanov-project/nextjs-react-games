@@ -1,8 +1,7 @@
+// import firstLvl from './1-1.json';
 import Level from '../Level';
 import { createBackgroundLayer, createSpriteLayer } from '../Layers';
 import { loadBackgroundSprites } from '../spriteSheets/LoadSprites';
-
-import firstLvl from './1-1.json';
 
 export default function loadImage(url: any) {
   return new Promise((resolve) => {
@@ -14,7 +13,7 @@ export default function loadImage(url: any) {
   });
 }
 
-function createTiles(level: any, backgrounds: any) {
+export function createTiles(level: any, backgrounds: any) {
   function applyRange(background: any, xStart: number, xLen: number, yStart: number, yLen: number) {
     const xEnd = xStart + xLen;
     const yEnd = yStart + yLen;
@@ -43,46 +42,57 @@ function createTiles(level: any, backgrounds: any) {
   });
 }
 
-export function loadLevel() {
-  return Promise.all([firstLvl, loadBackgroundSprites()]).then(([levelSpec, backgroundSprites]) => {
-    const level = new Level();
+const loadJSON = async (url: string) => {
+  // console.log(firstLvl, 'firstLvl');
+  // return fetch(url).then((r) => r.json());
+  const response = await fetch(url);
+  return response.json();
+};
 
-    const levelSpecObj = JSON.parse(JSON.stringify(levelSpec));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function loadLevel(name: string) {
+  // eslint-disable-next-line quotes
+  return Promise.all([loadJSON('/api/mario-bros/staticData'), loadBackgroundSprites()]).then(
+    ([levelSpec, backgroundSprites]) => {
+      const level = new Level();
 
-    for (let i = 0; i < 100; i++) {
-      levelSpecObj.backgrounds[1].ranges.push([
-        20 + i * 10, // x
-        5, // width
-        19, // y
-        // eslint-disable-next-line prettier/prettier
+      const levelSpecObj = JSON.parse(levelSpec);
+
+      /* for (let i = 0; i < 100; i++) {
+        levelSpecObj.backgrounds[1].ranges.push([
+          20 + i * 10, // x
+          5, // width
+          19, // y
+          // eslint-disable-next-line prettier/prettier
         1// height
-      ]);
+        ]);
 
-      levelSpecObj.backgrounds[1].ranges.push([
-        20 + i * 15, // x
-        6, // width
-        15, // y
-        // eslint-disable-next-line prettier/prettier
+        levelSpecObj.backgrounds[1].ranges.push([
+          20 + i * 15, // x
+          6, // width
+          15, // y
+          // eslint-disable-next-line prettier/prettier
         1// height
-      ]);
+        ]);
 
-      levelSpecObj.backgrounds[1].ranges.push([
-        25 + i * 12, // x
-        5, // width
-        Math.floor(Math.random() * 10) + 2, // y
-        // eslint-disable-next-line prettier/prettier
+        levelSpecObj.backgrounds[1].ranges.push([
+          25 + i * 12, // x
+          5, // width
+          Math.floor(Math.random() * 10) + 2, // y
+          // eslint-disable-next-line prettier/prettier
         1// height
-      ]);
-    }
+        ]);
+      } */
 
-    createTiles(level, levelSpecObj.backgrounds);
+      createTiles(level, levelSpecObj.backgrounds);
 
-    const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
-    level.comp.layers.push(backgroundLayer);
+      const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
+      level.comp.layers.push(backgroundLayer);
 
-    const spriteLayer = createSpriteLayer(level.entities);
-    level.comp.layers.push(spriteLayer);
+      const spriteLayer = createSpriteLayer(level.entities);
+      level.comp.layers.push(spriteLayer);
 
-    return level;
-  });
+      return level;
+    },
+  );
 }

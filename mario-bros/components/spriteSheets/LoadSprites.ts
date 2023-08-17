@@ -11,13 +11,13 @@ export const loadBackgroundSprites = () =>
   loadImage(tilesImage).then((image) => {
     const sprites = new SpriteSheets(image, 16, 16);
     sprites.defineTile('ground', 0, 0);
-    sprites.defineTile('sky', 10, 7);
+    sprites.defineTile('sky', 3, 23);
     return sprites;
   });
 
 export const loadMarioSprites = () =>
   loadImage(marioImage).then((image) => {
-    const sprites = new SpriteSheets(image, 16, 16);
+    const sprites = new SpriteSheets(image, 16, 18);
     sprites.define('idle', 2, 73, 16, 18);
     return sprites;
   });

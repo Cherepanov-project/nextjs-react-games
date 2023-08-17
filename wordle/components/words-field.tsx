@@ -20,6 +20,7 @@ import EndScreen from './end-screen';
 import WordRow from './word-row';
 
 const getWord = async (lang = 'ru', length = [5, 6]) => {
+  console.log('in getWord');
   const response = await fetch(`/api/wordle/words?lang=${lang}&len=${length[0]}-${length[1]}`);
   return response.json();
 };

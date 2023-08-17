@@ -19,7 +19,8 @@ const checkIfWordExists = (words: string, word: string) => {
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const searchParams = req.query;
-
+  // console.log('IN API NEXT GET WORDS', req);
+  console.log('abs path', process.cwd());
   if (searchParams.lang && searchParams.len) {
     const words = await readFile(searchParams.lang === 'ru' ? RU_WORDS : EN_WORDS, {
       encoding: 'utf-8',
