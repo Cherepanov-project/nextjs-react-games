@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -8,7 +6,6 @@ import { store, decTime } from '../redux/store';
 import Timer from './Timer';
 import Camera from './Camera';
 import { loadEntities } from './Entityes';
-// import { loadLevel } from './levels/loadLevel';
 import { createCameraLayer, createCollisionLayer } from './Layers';
 import { setupKeyboard } from './setupKeyboard';
 import styles from './game.module.scss';
@@ -43,8 +40,6 @@ const Game = () => {
       goomba.pos.set(390, 266);
       koopa.pos.set(420, 266);
 
-      // uncomment this for debugging
-      // loadLevel.comp.layers.push(createCollisionLayer(loadLevel), createCameraLayer(camera));
       createCollisionLayer(loadLevel);
       createCameraLayer(camera);
 
@@ -68,7 +63,7 @@ const Game = () => {
 
       timer.start();
       // eslint-disable-next-line prettier/prettier
-      }
+    }
     );
   }, []);
 

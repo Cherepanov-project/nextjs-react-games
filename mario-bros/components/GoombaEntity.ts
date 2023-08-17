@@ -38,9 +38,6 @@ class Behavior extends Trait {
 }
 
 function createGoombaFactory(sprite: any) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  // const it: any = this;
-
   function routeImage(goomba: any) {
     if (goomba.killable.dead) {
       return 'flat';
