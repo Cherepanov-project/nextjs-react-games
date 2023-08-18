@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { boardReducer } from './board-slice';
 import { targetsReducer } from './targets-slice';
@@ -12,7 +13,7 @@ import { leaderListReducer } from './leader-list-slice';
 export const aimTrainerRootReducer = persistReducer(
   {
     key: 'aim-trainer',
-    storage,
+    storage: AsyncStorage,
     whitelist: ['leaderList'],
   },
   combineReducers({
