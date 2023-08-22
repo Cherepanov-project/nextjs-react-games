@@ -29,6 +29,7 @@ export default class SpriteSheets {
   draw(name: any, ctx: any, x: any, y: any) {
     const buffer = this.tiles.get(name);
     ctx.drawImage(buffer, x, y);
+    // eslint-disable-next-line no-undef
   }
 
   drawTile(name: any, ctx: any, x: any, y: any) {

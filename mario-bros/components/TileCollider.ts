@@ -1,5 +1,6 @@
 import TileResolver from './TileResolver';
 import { Matrix } from './Vec2';
+import { Sides } from './Entity';
 
 export default class TileCollider {
   private tiles: TileResolver;
@@ -24,17 +25,19 @@ export default class TileCollider {
     matches.forEach((match: any) => {
       if (!match) return;
 
-      if (match.tile.name !== 'ground') return;
+      if (match.tile.type !== 'ground') return;
 
       if (entity.vel.x > 0) {
         if (entity.pos.x + entity.size.x > match.x1) {
           entity.pos.x = match.x1 - entity.size.x;
           entity.vel.x = 0;
+          entity.obstruct(Sides.RIGHT);
         }
       } else if (entity.vel.x < 0) {
         if (entity.pos.x < match.x2) {
           entity.pos.x = match.x2;
           entity.vel.x = 0;
+          entity.obstruct(Sides.LEFT);
         }
       }
     });
@@ -53,17 +56,20 @@ export default class TileCollider {
     const matches = this.tiles.searchByRange(entity.pos.x, entity.pos.x + entity.size.x, y, y);
 
     matches.forEach((match: any) => {
-      if (match.tile.name !== 'ground') return;
+      if (match.tile.type !== 'ground') return;
 
       if (entity.vel.y > 0) {
         if (entity.pos.y + entity.size.y > match.y1) {
           entity.pos.y = match.y1 - entity.size.y;
           entity.vel.y = 0;
+
+          entity.obstruct('bottom');
         }
       } else if (entity.vel.y < 0) {
         if (entity.pos.y < match.y2) {
           entity.pos.y = match.y2;
           entity.vel.y = 0;
+          entity.obstruct('top');
         }
       }
     });

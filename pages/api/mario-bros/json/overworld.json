@@ -1,0 +1,104 @@
+{
+    "imageURL": "/api/mario-bros/staticPictures?file=tiles.png",
+    "tileW": 16,
+    "tileH": 16,
+    "tiles": [
+        {
+            "name": "ground",
+            "index": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "sky",
+            "index": [
+                3,
+                23
+            ]
+        },
+        {
+            "name": "chocolate",
+            "index": [
+                0,
+                1
+            ]
+        },
+        {
+            "name": "bricks",
+            "index": [
+                1,
+                0
+            ]
+        },
+        {
+            "name": "chance",
+            "index": [
+                24,
+                0
+            ]
+        },
+        {
+            "name": "chance-1",
+            "index": [
+                24,
+                0
+            ]
+        },
+        {
+            "name": "chance-2",
+            "index": [
+                25,
+                0
+            ]
+        },
+        {
+            "name": "chance-3",
+            "index": [
+                26,
+                0
+            ]
+        },
+        {
+            "name": "pipe-1",
+            "index": [
+                0,
+                8
+            ]
+        },
+        {
+            "name": "pipe-2",
+            "index": [
+                1,
+                8
+            ]
+        },
+        {
+            "name": "pipe-3",
+            "index": [
+                0.2,
+                9
+            ]
+        },
+        {
+            "name": "pipe-4",
+            "index": [
+                0.8,
+                9
+            ]
+        }
+    ],
+    "animations": [
+        {
+            "name": "chance",
+            "frameLen": 0.12,
+            "frames": [
+                "chance-1",
+                "chance-1",
+                "chance-2",
+                "chance-3",
+                "chance-2"
+            ]
+        }
+    ]
+}

@@ -1,10 +1,9 @@
 import Level from '../Level';
 import { createBackgroundLayer, createSpriteLayer } from '../Layers';
-import { loadBackgroundSprites } from '../spriteSheets/LoadSprites';
+import SpriteSheets from '../spriteSheets/SpriteSheets';
+import tilesImage from '../../assets/imgSprites/tiles.png';
 
-import firstLvl from './1-1.json';
-
-export default function loadImage(url: any) {
+export default async function loadImage(url: any) {
   return new Promise((resolve) => {
     const image = new Image();
     image.addEventListener('load', () => {
@@ -14,7 +13,7 @@ export default function loadImage(url: any) {
   });
 }
 
-function createTiles(level: any, backgrounds: any) {
+export function createTiles(level: any, backgrounds: any) {
   function applyRange(background: any, xStart: number, xLen: number, yStart: number, yLen: number) {
     const xEnd = xStart + xLen;
     const yEnd = yStart + yLen;
@@ -22,6 +21,7 @@ function createTiles(level: any, backgrounds: any) {
       for (let y = yStart; y < yEnd; ++y) {
         level.tiles.set(x, y, {
           name: background.tile,
+          type: background.type,
         });
       }
     }
@@ -43,11 +43,38 @@ function createTiles(level: any, backgrounds: any) {
   });
 }
 
-export function loadLevel() {
-  return Promise.all([firstLvl, loadBackgroundSprites()]).then(([levelSpec, backgroundSprites]) => {
+const loadJSON = async (url: string) => {
+  const response = await fetch(url);
+  return response.json();
+};
+
+export function loadSpriteSheet(name: string, fLoad: any) {
+  return loadJSON(`/api/mario-bros/staticData?file=${name}`)
+    .then((sheetSpec) => Promise.all([JSON.parse(sheetSpec), fLoad()]))
+    .then(([sheetSpec, image]) => {
+      const sprites = new SpriteSheets(image, sheetSpec.tileW, sheetSpec.tileH);
+
+      if (sheetSpec.tiles) {
+        sheetSpec.tiles.forEach((tileSpec: any) => {
+          sprites.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1]);
+        });
+      }
+      return sprites;
+    });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function loadLevel(name: string) {
+  // eslint-disable-next-line quotes
+  return Promise.all([
+    loadJSON(`/api/mario-bros/staticData?file=${name}`),
+    loadSpriteSheet('overworld.json', () => loadImage(tilesImage)),
+  ]).then(([levelSpec, backgroundSprites]) => {
     const level = new Level();
 
-    createTiles(level, levelSpec.backgrounds);
+    const levelSpecObj = JSON.parse(levelSpec);
+
+    createTiles(level, levelSpecObj.backgrounds);
 
     const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
     level.comp.layers.push(backgroundLayer);

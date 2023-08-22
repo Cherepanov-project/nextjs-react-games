@@ -1,0 +1,25 @@
+{
+   "imageURL": "../imgSprites/enemies.png",
+
+   "frames": [
+       {
+           "name": "walk-1",
+           "rect": [0, 50, 19, 18]
+       },
+       {
+        "name": "flat",
+        "rect": [38, 50, 19, 18]
+       }
+   ],
+
+   "animations": [
+       {
+           "name": "walk",
+           "frameLen": 0.15,
+           "frames": [
+               "walk-1",
+               "walk-2"
+           ]
+       }
+   ]
+}

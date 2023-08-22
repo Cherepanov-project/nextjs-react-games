@@ -1,4 +1,12 @@
 import Vec2 from './Vec2';
+import BoundingBox from './BoundingBox';
+
+export const Sides = {
+  TOP: Symbol('top'),
+  BOTTOM: Symbol('bottom'),
+  LEFT: Symbol('left'),
+  RIGHT: Symbol('right'),
+};
 
 export class Trait {
   private NAME: string;
@@ -7,9 +15,18 @@ export class Trait {
     this.NAME = name;
   }
 
-  update() {
-    console.warn('Unhandled update call in Trait');
+  getName() {
+    return this.NAME;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+  collides(us: any, them: any) {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+  obstruct(entity: object, side: any) {}
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  update() {}
 }
 
 export default class Entity {
@@ -17,17 +34,27 @@ export default class Entity {
 
   size: Vec2;
 
-  private vel: Vec2;
+  vel: Vec2;
 
   private traits: number[];
 
   draw: (ctx: any) => void;
 
-  constructor() {
+  offset: Vec2;
+
+  bounds: BoundingBox;
+
+  killable: any;
+
+  name: string;
+
+  constructor(name: string = undefined) {
+    this.name = name;
     this.pos = new Vec2(0, 0);
     this.vel = new Vec2(0, 0);
     this.size = new Vec2(0, 0);
-
+    this.offset = new Vec2(0, 0);
+    this.bounds = new BoundingBox(this.pos, this.size, this.offset);
     this.traits = [];
   }
 
@@ -39,9 +66,21 @@ export default class Entity {
     this[trait.NAME] = trait;
   }
 
-  update(deltaTime: number) {
+  collides(candidate: any) {
     this.traits.forEach((trait: any) => {
-      trait.update(this, deltaTime);
+      trait.collides(this, candidate);
+    });
+  }
+
+  obstruct(side: any) {
+    this.traits.forEach((trait: any) => {
+      trait.obstruct(this, side);
+    });
+  }
+
+  update(deltaTime: number, level: any) {
+    this.traits.forEach((trait: any) => {
+      trait.update(this, deltaTime, level);
     });
   }
 }
