@@ -1,0 +1,24 @@
+.wheel {
+  position: absolute;
+  top: 47%;
+  left: 6.25%;
+  width: 1000px;
+  height: 1000px;
+  background: url('../../assets/images/wheel.png') no-repeat;
+  background-size: contain;
+  transition: 5s all;
+}
+
+.spin {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  left: 27%;
+  bottom: 60px;
+  border-radius: 50% 50% 0 0;
+  background-color: aqua;
+  font-size: 24px;
+  &:active {
+    bottom: 55px;
+  }
+}

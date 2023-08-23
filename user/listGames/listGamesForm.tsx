@@ -15,6 +15,7 @@ import fruitNinjaIcon from '../img/fruitNinjaIcon.png';
 import hangmanIcon from '../img/hangmanIcon.png';
 import marioIcon from '../img/marioIcon.png';
 import memoryCards from '../img/memoryCards.png';
+import miraclField from '../img/miracle-field-logo.png';
 import sapperIcon from '../img/sapperIcon.png';
 import snake from '../img/snake.png';
 import solitairIcon from '../img/solitairIcon.png';
@@ -56,6 +57,7 @@ const ListGamesForm = () => {
     { src: wordleIcon.src, title: 'wordle', href: 'wordle' },
     { src: snake.src, title: 'snake', href: 'snake' },
     { src: marioIcon.src, title: 'mario-bros' },
+    { src: miraclField.src, title: 'miracle-field' },
   ];
   return (
     <>
