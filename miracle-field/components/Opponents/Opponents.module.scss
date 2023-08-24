@@ -1,0 +1,15 @@
+.opponents {
+  position: absolute;
+  right: 100px;
+  bottom: 200px;
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.opponent {
+  width: 200px;
+  height: 200px;
+  background-image: url('../../assets/images/frame.png');
+  background-size: contain;
+}
