@@ -8,9 +8,13 @@ import classes from './Layout.module.scss';
 
 const Layout = () => (
   <main className={classes.layout}>
-    <Host />
+    <div className={classes.container}>
+      <Host />
+      <Wheel />
+    </div>
+
     <Table />
-    <Wheel />
+
     <Opponents />
     <Keyboard />
   </main>

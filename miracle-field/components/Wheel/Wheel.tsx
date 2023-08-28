@@ -5,6 +5,7 @@ import { getRndInteger } from '../../utils/getRandomInteger';
 import classes from './Wheel.module.scss';
 
 const Wheel = () => {
+  //количество очков получается из поворота колеса деленое на 5 
   const [rotate, setRotate] = useState(0);
 
   const spin = () => {
